@@ -31,9 +31,9 @@ protected:
 
 public:
     void setPixmap(QPixmap &pixmap, const QString &path, qreal);
-
     void onScaleChange(int scaleVal, const QPoint &p);
-
+    void zoomIn();
+    void zoomOut();
 protected:
     QPixmap _pixmap;
     QMovie *_pMovie;

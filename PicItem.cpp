@@ -11,7 +11,7 @@
 #include <QGraphicsSceneMouseEvent>
 
 PicItem::PicItem(int &scaleVal)
-        : _proportion(1), _pMovie(nullptr), _scaleVal(scaleVal) {
+    : _proportion(1), _pMovie(nullptr), _scaleVal(scaleVal) {
 
 }
 
@@ -28,7 +28,6 @@ QRectF PicItem::boundingRect() const {
         qreal width = _pixmap.width() * _proportion;
         qreal height = _pixmap.height() * _proportion;
         return {-width / 2, -height / 2, width, height};
-
     }
 
     return {};
@@ -44,17 +43,14 @@ void PicItem::paint(QPainter *painter, const QStyleOptionGraphicsItem *option, Q
         qreal width = _pixmap.width() * _proportion;
         qreal height = _pixmap.height() * _proportion;
 
-        if(_pMovie->isValid())
-        {
+        if (_pMovie->isValid()) {
             painter->drawPixmap(static_cast<int>(-width / 2), static_cast<int>(-height / 2), static_cast<int>(width),
                                 static_cast<int>(height), _pMovie->currentPixmap());
         } else {
             painter->drawPixmap(static_cast<int>(-width / 2), static_cast<int>(-height / 2), static_cast<int>(width),
                                 static_cast<int>(height), _pixmap
-                                );
+                               );
         }
-
-
     }
 }
 
@@ -76,20 +72,18 @@ void PicItem::setPixmap(QPixmap &pixmap, const QString &path, qreal proportion) 
 
 // 滚轮事件
 void PicItem::wheelEvent(QGraphicsSceneWheelEvent *e) {
-    if (e->delta() > 0)
+    if (e->delta() > 0) {
         _scaleVal++;
-    else
+    } else {
         _scaleVal--;
-    //
+    }
     onScaleChange(_scaleVal, QPoint(0, 0));
-    //
     e->accept();
     //QGraphicsItem::wheelEvent(e);
 }
 
 // 图片缩放
 void PicItem::onScaleChange(int scaleVal, const QPoint &p) {
-
     if (scaleVal > maxScale) {
         _scaleVal = maxScale;
         return;
@@ -100,11 +94,21 @@ void PicItem::onScaleChange(int scaleVal, const QPoint &p) {
     }
 
     qreal multiple;
-    if (scaleVal > 0)
+    if (scaleVal > 0) {
         multiple = pow(1.1, scaleVal);
-    else
+    } else {
         multiple = pow(1 / 1.1, -scaleVal);
-
+    }
     setTransformOriginPoint(p);
     setScale(multiple);
+}
+
+void PicItem::zoomIn() {
+    _scaleVal++;
+    onScaleChange(_scaleVal, QPoint(0, 0));
+}
+
+void PicItem::zoomOut() {
+    _scaleVal--;
+    onScaleChange(_scaleVal, QPoint(0, 0));
 }

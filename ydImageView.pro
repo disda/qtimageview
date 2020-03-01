@@ -24,10 +24,13 @@ DEFINES += QT_DEPRECATED_WARNINGS
 
 
 SOURCES += main.cpp\
-        widget.cpp \
-    PicItem.cpp
+    PicItem.cpp \
+    imageWidget.cpp \
+    imageview.cpp
 
-HEADERS  += widget.h \
-    PicItem.h
+HEADERS  += \
+    PicItem.h \
+    imageWidget.h \
+    imageview.h
 
 FORMS    += widget.ui
